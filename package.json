@@ -1,6 +1,6 @@
 {
   "name": "voxel-glass",
-  "description": "",
+  "description": "transparent and translucent glass blocks (voxel.js plugin)",
   "main": "glass.js",
   "version": "0.0.1",
   "repository": {
@@ -8,7 +8,11 @@
     "url": "git@github.com:deathcap/voxel-glass.git"
   },
   "keywords": [
-    "voxel"
+    "voxel",
+    "plugin",
+    "glass",
+    "transparent",
+    "translucent"
   ],
   "dependencies": {
   },
