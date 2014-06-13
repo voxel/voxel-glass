@@ -1,6 +1,7 @@
 {
   "name": "voxel-glass",
   "description": "",
+  "main": "glass.js",
   "version": "0.0.1",
   "repository": {
     "type": "git",
