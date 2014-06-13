@@ -1,0 +1,15 @@
+{
+  "name": "voxel-glass",
+  "description": "",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:deathcap/voxel-glass.git"
+  },
+  "keywords": [
+    "voxel"
+  ],
+  "dependencies": {
+  },
+  "license": "MIT"
+}
