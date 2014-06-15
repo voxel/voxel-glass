@@ -1,6 +1,7 @@
 'use strict';
 
 var ItemPile = require('itempile');
+var ucfirst = require('ucfirst');
 
 module.exports = function(game, opts) {
   return new GlassPlugin(game, opts);
@@ -35,28 +36,36 @@ GlassPlugin.prototype.playerOrientation = function() {
 };
 
 GlassPlugin.prototype.enable = function() {
-  this.registry.registerBlock('glass', {texture: 'glass', transparent: true, hardness: 0.2});
+  this.registry.registerBlock('glass', {texture: 'glass', transparent: true, hardness: 0.2, creativeTab: 'glass'});
+
+  this.registerPane('blue');
+};
+
+GlassPlugin.prototype.registerPane = function(color) {
+  var colorName = ucfirst(color);
+
+  var texture = 'glass_' + color;
 
   // item
   var self = this;
-  this.registry.registerItem('glassPane', {
-    displayName: 'Glass Pane',
-    itemTexture: 'glass_blue',
-    creativeTab: 'blocks', // TODO: another decorative tab? glass tab?
+  this.registry.registerItem('glassPane' + colorName, {
+    displayName: colorName + ' Glass Pane',
+    itemTexture: texture,
+    creativeTab: 'glass',
     onUse: function(held, target) {
       // place X or Z pane depending on facing
-      return self.use.useBlock(target, new ItemPile('glassPane' + self.playerOrientation())) === undefined;
+      return self.use.useBlock(target, new ItemPile('glassPane' + self.playerOrientation() + colorName)) === undefined;
     },
   });
 
   // oriented blocks
 
-  this.registry.registerBlock('glassPaneZ', {
+  this.registry.registerBlock('glassPaneZ' + colorName, {
     creativeTab: false,
-    itemDrop: 'glassPane',
-    displayName: 'Glass Pane Z',
-    itemTexture: 'glass_blue',  // flat, not 3D cube
-    texture: 'glass_blue',      // preload for model below
+    itemDrop: 'glassPane' + colorName,
+    displayName: colorName + ' Glass Pane Z',
+    itemTexture: texture, // flat, not 3D cube
+    texture: texture,     // preload for model below
     blockModel:
       [{from: [0,0,7],
       to: [16,16,2],
@@ -68,17 +77,17 @@ GlassPlugin.prototype.enable = function() {
         west: {},
         east: {}
         },
-      texture: 'glass_blue',
+      texture: texture,
       }],
   });
 
   // same as above but oriented along X axis
-  this.registry.registerBlock('glassPaneX', {
+  this.registry.registerBlock('glassPaneX' + colorName, {
     creativeTab: false,
-    itemDrop: 'glassPane',
-    displayName: 'Glass Pane X',
-    itemTexture: 'glass_blue',
-    texture: 'glass_blue',
+    itemDrop: 'glassPane' + colorName,
+    displayName: colorName + ' Glass Pane X',
+    itemTexture: texture,
+    texture: texture,
     blockModel:
       [{from: [7,0,0],
       to: [2,16,16],
@@ -90,11 +99,12 @@ GlassPlugin.prototype.enable = function() {
         west: {},
         east: {}
         },
-      texture: 'glass_blue',
+      texture: texture,
       }],
   });
 };
 
 GlassPlugin.prototype.disable = function() {
+  // TODO: unregister blocks
 };
 
