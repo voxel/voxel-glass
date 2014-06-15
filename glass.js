@@ -7,7 +7,7 @@ module.exports = function(game, opts) {
   return new GlassPlugin(game, opts);
 };
 module.exports.pluginInfo = {
-  loadAfter: ['voxel-registry', 'voxel-use']
+  loadAfter: ['voxel-registry', 'voxel-use', 'voxel-recipes']
 };
 
 function GlassPlugin(game, opts) {
@@ -16,6 +16,8 @@ function GlassPlugin(game, opts) {
 
   this.use = game.plugins.get('voxel-use');
   if (!this.use) throw new Error('voxel-glass requires voxel-use');
+
+  this.recipes = game.plugins.get('voxel-recipes'); // optional
 
   this.colors = opts.colors !== undefined ? opts.colors : ['black', 'blue', 'brown', 'cyan', 'gray', 'green', 'light_blue', 'lime', 'magenta', 'orange', 'pink', 'purple', 'red', 'silver', 'white', 'yellow'];
 
@@ -43,13 +45,20 @@ GlassPlugin.prototype.enable = function() {
   for (var i = 0; i < this.colors.length; i += 1) {
     this.registerPane(this.colors[i]); // TODO: use metablocks?
   }
+  this.registerPane(''); // clear
+
+  if (this.recipes) {
+    this.recipes.registerPositional([['glass', 'glass', 'glass']], ['glassPane']);
+
+    // TODO: dye recipes, harmonize with https://github.com/deathcap/voxel-wool (API?)
+  }
 };
 
 // Register an item and two blocks for a glass pane of the given color
 GlassPlugin.prototype.registerPane = function(color) {
   var colorName = ucfirst(color);
 
-  var texture = 'glass_' + color;
+  var texture = color !== '' ? ('glass_' + color) : 'glass';
 
   // item
   var self = this;
