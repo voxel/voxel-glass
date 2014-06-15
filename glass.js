@@ -17,6 +17,8 @@ function GlassPlugin(game, opts) {
   this.use = game.plugins.get('voxel-use');
   if (!this.use) throw new Error('voxel-glass requires voxel-use');
 
+  this.colors = opts.colors !== undefined ? opts.colors : ['black', 'blue', 'brown', 'cyan', 'gray', 'green', 'light_blue', 'lime', 'magenta', 'orange', 'pink', 'purple', 'red', 'silver', 'white', 'yellow'];
+
   this.enable();
 }
 
@@ -38,9 +40,12 @@ GlassPlugin.prototype.playerOrientation = function() {
 GlassPlugin.prototype.enable = function() {
   this.registry.registerBlock('glass', {texture: 'glass', transparent: true, hardness: 0.2, creativeTab: 'glass'});
 
-  this.registerPane('blue');
+  for (var i = 0; i < this.colors.length; i += 1) {
+    this.registerPane(this.colors[i]); // TODO: use metablocks?
+  }
 };
 
+// Register an item and two blocks for a glass pane of the given color
 GlassPlugin.prototype.registerPane = function(color) {
   var colorName = ucfirst(color);
 
@@ -77,7 +82,7 @@ GlassPlugin.prototype.registerPane = function(color) {
         west: {},
         east: {}
         },
-      texture: texture,
+      texture: texture, // for all faces. TODO: use glass_pane_top for narrow faces?
       }],
   });
 
