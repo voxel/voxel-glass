@@ -40,7 +40,7 @@ GlassPlugin.prototype.playerOrientation = function() {
 };
 
 GlassPlugin.prototype.enable = function() {
-  this.registry.registerBlock('glass', {texture: 'glass', transparent: true, hardness: 0.2, creativeTab: 'glass'});
+  this.registry.registerBlock('glass', {texture: 'glass', transparent: true, hardness: 0.2, creativeTab: 'glass', harvestSound: 'random/glass1'});
 
   for (var i = 0; i < this.colors.length; i += 1) {
     this.registerPane(this.colors[i]); // TODO: use metablocks?
@@ -75,6 +75,7 @@ GlassPlugin.prototype.registerPane = function(color) {
   // oriented blocks
 
   this.registry.registerBlock('glassPaneZ' + colorName, {
+    harvestSound: 'random/glass1',
     creativeTab: false,
     itemDrop: 'glassPane' + colorName,
     displayName: colorName + ' Glass Pane Z',
@@ -97,6 +98,7 @@ GlassPlugin.prototype.registerPane = function(color) {
 
   // same as above but oriented along X axis
   this.registry.registerBlock('glassPaneX' + colorName, {
+    harvestSound: 'random/glass1',
     creativeTab: false,
     itemDrop: 'glassPane' + colorName,
     displayName: colorName + ' Glass Pane X',
