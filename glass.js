@@ -48,7 +48,7 @@ GlassPlugin.prototype.enable = function() {
   this.registerPane(''); // clear
 
   if (this.recipes) {
-    this.recipes.registerPositional([['glass', 'glass', 'glass']], ['glassPane']);
+    this.recipes.registerPositional([['glass', 'glass', 'glass']], ['glassPane', 3]);
 
     // TODO: dye recipes, harmonize with https://github.com/deathcap/voxel-wool (API?)
   }
