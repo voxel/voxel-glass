@@ -15,7 +15,7 @@
     "translucent"
   ],
   "dependencies": {
-    "itempile": "^1.0.1",
+    "itempile": "^2.0.0",
     "ucfirst": "0.0.1"
   },
   "license": "MIT"
